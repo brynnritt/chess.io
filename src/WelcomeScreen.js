@@ -12,16 +12,22 @@ const WelcomeScreen = () => {
     //bool for when room is ready, when true render go button
     // player 1 waits for player 2 in room
 
+
+    const handleRoomCreated = (response) => {
+        if (response) {
+            setRoomCreated(true);
+        }
+        
+    }
+
     const handleCreateClick = () => {
         const newGameCode = Math.floor(Math.random() * (9999 - 1000 + 1)) + 1000;
         setGameCode(newGameCode);
         setJoinGame(false);
         //setCreateGame(true);
         setDirections('Copy code and send to a friend');
-        var response = createRoom(newGameCode);
-        if (response) {
-            setRoomCreated(true);
-        }
+        var response = createRoom(newGameCode, handleRoomCreated);
+        
     }
 
     const handleJoinClick = () => {
@@ -80,7 +86,7 @@ const WelcomeScreen = () => {
                 <div className="directions">
                     <label>{ directions }</label>
                 </div>
-                { roomCreated && <button className="play-button">Play</button> }
+                { roomCreated && <Link to={'/game/' + gameCode}> <button className="play-button">Play</button> </Link> }
             </div>
         </div>
     );

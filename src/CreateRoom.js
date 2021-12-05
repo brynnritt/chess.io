@@ -2,19 +2,27 @@
 const client = require('./Socket').socket
 
 
-const CreateRoom = (gameCode) => {
-    const response = '';
+/*var response = '';
 
-    client.emit('createRoom', gameCode);
+client.on('createRoom', data => {
+    response = data;
+    console.log("server response " + response.roomId);
+});*/
 
-    client.on('createRoom', data => {
-        response = data.gameId;
-        console.log("server response" + response);
-    })
- 
+const CreateRoom = (gameCode, callback) => {
+    var response = '';
+
+    client.emit('createRoom', {roomId: gameCode}, function(data){
+        response = data;
+        console.log("server response " + response.roomId);
+        callback(response);
+
+    });
+
     return ( response );
 }
+
  
-export const createRoom = (gameCode) => {
-    CreateRoom(gameCode);
+export const createRoom = (gameCode, callback) => {
+    CreateRoom(gameCode, callback);
 };

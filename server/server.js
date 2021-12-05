@@ -1,5 +1,4 @@
 const app = require("express")();
-//const app = express();
 const http = require('http').Server(app);
 const io = require("socket.io")(http, {
     cors: {
@@ -9,20 +8,23 @@ const io = require("socket.io")(http, {
 });
 
 const port = 3001;
-//const index = require("./routes/index");
-//app.use(index);
-
-//const server = http.createServer(app);
-//const io = socketIo(server);
-
-//try emitting a number to create room, 
+ 
 io.on("connection", socket => {
   console.log("New client connected");
 
-  socket.on('createRoom', function(roomID) {
-      console.log('creating room ' + roomID);
-      socket.emit('createRoom', {roomId: roomID});
+  socket.on('createRoom', function(data, callback) {
+      console.log('creating room ' + data.roomId);
+      //socket.emit('createRoom', {roomId: data.roomId});
+      socket.join(data.roomId);
+      callback({roomId: data.roomId});
   });
+
+  socket.on('joinRoom', function(data){
+      console.log('joining room' + data.roomId);
+      var room = io.sockets.adapter.room[data.roomId];
+  });
+
+
 
 
   socket.on("disconnect", () => {
@@ -31,13 +33,8 @@ io.on("connection", socket => {
 });
 
 
-/*
-function createRoom(roomId) {
-    socket.emit('createRoom', {roomId: roomId});
-    console.log('roomId ' + roomId);
-}*/
+
 
 http.listen(port, function(){
     console.log('listening on localhost:3001');
 })
-//server.listen(port, () => console.log(`Listening on port ${port}`));
