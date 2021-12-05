@@ -1,7 +1,6 @@
 import { useState } from "react";
-import Socket from './Socket';
 import { Link } from "react-router-dom";
-import CreateRoom from "./CreateRoom";
+import { createRoom } from "./CreateRoom";
 
 
 const WelcomeScreen = () => {
@@ -14,13 +13,14 @@ const WelcomeScreen = () => {
     // player 1 waits for player 2 in room
 
     const handleCreateClick = () => {
-        setGameCode(Math.floor(Math.random() * (9999 - 1000 + 1)) + 1000);
+        const newGameCode = Math.floor(Math.random() * (9999 - 1000 + 1)) + 1000;
+        setGameCode(newGameCode);
         setJoinGame(false);
         //setCreateGame(true);
-        setDirections('Copy code and send to a friend')
-        const response = CreateRoom(gameCode)
+        setDirections('Copy code and send to a friend');
+        var response = createRoom(newGameCode);
         if (response) {
-            setRoomCreated = true;
+            setRoomCreated(true);
         }
     }
 

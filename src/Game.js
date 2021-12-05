@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import Board from "./Board";
-import { ChessInstance } from 'chess.js';
+//import Board from "./Board";
+//import { ChessInstance } from 'chess.js';
 import Chessboard from "chessboardjsx";
 
 const Chess = require('chess.js');

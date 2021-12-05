@@ -1,18 +1,20 @@
 
-const socket = require('./Socket').socket
+const client = require('./Socket').socket
 
 
-const createRoom = (gameId) => {
+const CreateRoom = (gameCode) => {
     const response = '';
 
-    socket.emit('createGame', gameId)
+    client.emit('createRoom', gameCode);
 
-    socket.on('createGame', data => {
-        response = data;
-        console.log(response);
+    client.on('createRoom', data => {
+        response = data.gameId;
+        console.log("server response" + response);
     })
  
     return ( response );
 }
  
-export default createRoom;
+export const createRoom = (gameCode) => {
+    CreateRoom(gameCode);
+};
