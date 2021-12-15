@@ -2,7 +2,6 @@ import NavBar from './NavBar';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'; 
 import NotFound from './NotFound';
 import WelcomeScreen from './WelcomeScreen';
-import Board from './Board';
 import Game from './Game';
 import Test from './Test';
 
@@ -16,7 +15,7 @@ function App() {
             <Route exact path="/">
               <WelcomeScreen />
             </Route>
-            <Route path="/game">
+            <Route path="/game/:gameid/:userid">
               <Game />
             </Route>
             <Route exact path="/test">

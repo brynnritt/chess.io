@@ -1,39 +1,45 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { createRoom } from "./CreateRoom";
+import { joinRoom } from "./JoinRoom";
 
 
 const WelcomeScreen = () => {
     const [gameCode, setGameCode] = useState('');
     const [joinGame, setJoinGame] = useState(false);
     const [directions, setDirections] = useState('');
-    // when true, renders createRoom component to start creating game
+    // when true, rendered join game button
     const [roomCreated, setRoomCreated] = useState(false);
-    //bool for when room is ready, when true render go button
-    // player 1 waits for player 2 in room
+    // room creator will have userId of 1
+    const [userId, setUserId] = useState(0);
+    const [roomJoined, setRoomJoined] = useState(false);
 
 
     const handleRoomCreated = (response) => {
         if (response) {
             setRoomCreated(true);
         }
-        
+    }
+    
+    const handleRoomJoined = (response) => {
+        if (response) {
+            setRoomJoined(true);
+        }
     }
 
     const handleCreateClick = () => {
         const newGameCode = Math.floor(Math.random() * (9999 - 1000 + 1)) + 1000;
         setGameCode(newGameCode);
         setJoinGame(false);
-        //setCreateGame(true);
         setDirections('Copy code and send to a friend');
-        var response = createRoom(newGameCode, handleRoomCreated);
-        
+        setUserId(1);
     }
 
     const handleJoinClick = () => {
         setGameCode('');
         setJoinGame(true);
-        setDirections('Enter code from a friend')
+        setDirections('Enter code from a friend');
+        setUserId(2);
     }
 
     const handleCopyClick = () => {
@@ -42,7 +48,13 @@ const WelcomeScreen = () => {
     }
 
     const handleGoClick = () => {
+        
         return;
+    }
+
+    const handlePlayClick = () => {
+        if(userId == 1) createRoom(gameCode, handleRoomCreated);
+        else joinRoom(gameCode, handleRoomJoined);
     }
 
     return (  
@@ -69,8 +81,7 @@ const WelcomeScreen = () => {
                         onChange = { (e) => setGameCode(e.target.value) }
                     />
                     { !joinGame && <button 
-                        className="copy-button"
-                        onClick={ handleCopyClick }>
+                        className="copy-button">
                         Copy
                     </button> }
                     { joinGame && 
@@ -86,7 +97,9 @@ const WelcomeScreen = () => {
                 <div className="directions">
                     <label>{ directions }</label>
                 </div>
-                { roomCreated && <Link to={'/game/' + gameCode}> <button className="play-button">Play</button> </Link> }
+                { /*(roomCreated || roomJoined) && <Link to={'/game/' + gameCode}> <button className="play-button">Play</button> </Link> */}
+                <Link to={'/game/' + gameCode + '/' + userId}> <button className="play-button" onClick={ handlePlayClick }>Play</button> </Link>
+                
             </div>
         </div>
     );
