@@ -87,23 +87,23 @@ const Game = () => {
     
 
     return (
-        <div className="game">
+        <div className="game-board">
             <div className="board">
                 <Chessboard
-                    width={500}
+                    width={600}
                     position={ position }
                     onDrop={ onDrop }
                     orientation={ orientation }
                 />
             </div>
-            <div className="history-list">
-                {history.map((hist) => (
-                    <div className="history">
-                        <h2>{ hist.color }, { hist.san }</h2>
-                    </div>
-                ))}
+            <div className="history">
+                <h3>MOVES</h3>
+                <ul className="history-list">
+                    {history.map((hist) => (
+                        <li>{ hist.color }, { hist.san }</li>
+                    ))}
+                </ul>
             </div>
-            <h2>{ message }</h2>
         </div>
         
     );

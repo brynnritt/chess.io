@@ -16,7 +16,7 @@ nav {
   padding: 12px;
   display: flex;
   align-items: center;
-  max-width: auto;
+  min-width: auto;
   margin: 0 auto;
   border-bottom: 1px solid #f2f2f2;
   /* position: fixed; */
@@ -44,6 +44,7 @@ nav {
   font-weight: 400;
 }
 
+/* welcome screen */
 .welcome-screen {
   background: url("rect25884.png") repeat center center fixed;
   background-size: auto;
@@ -159,19 +160,48 @@ nav {
 
 }
 
-
-.board {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
 .directions {
   justify-content: center;
   display: flex;
   margin-top: 0px;
   transform: translate(0%, 15px);
 }
+
+/* game screen */
+
+.board {
+  margin-top: 50px;
+  margin-left: 25%;
+  flex-shrink: 3;
+
+}
+
+.history {
+  margin-left: 30px;
+  margin-top: 50px;
+  flex-direction: column;
+}
+
+
+
+.history-list {
+  margin-top: 0px;
+  align-items: flex-start;
+  padding-left: 0pt;
+  list-style-type: none;
+  padding-top: 10px;
+
+}
+
+.game-board {
+  display: flex;
+  flex-direction: row;
+  margin: auto;
+  color: white !important;
+  
+}
+
+
 
 
 
