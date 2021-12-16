@@ -1,85 +1,81 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Chessboard from "chessboardjsx";
-import { receiveMove } from "./ReceiveMove";
-import { sendMove } from "./SendMove";
-import Chat from "./Chat";
-//import { receiveColor } from "./ReceiveColor";
-const client = require('./Socket').socket
-
+const client = require('./Socket').socket;
+const STOCKFISH = window.STOCKFISH;
 
 const Chess = require('chess.js');
 
 const Game = () => {
-    const { gameid } = useParams();
-    const { userid } = useParams();
+   
     const [history, setHistory] = useState([]);
     const [chess] = useState(
         new Chess()
     );
-    const [message, setMessage] = useState('');
     const [position, setPosition] = useState(chess.fen());
-    const [colorReceived, setColorReceived] = useState(false);
     const [isWhite, setIsWhite] = useState(false);
-    const [orientation, setOrientation] = useState('black');
+    const [orientation, setOrientation] = useState('b');
+    const [engineIsRunning, setEngineIsRunning] = useState();
+
+    var engine =
+      typeof STOCKFISH === "function"
+        ? STOCKFISH()
+        : new Worker("stockfish.js");
+
+    
 
     useEffect(() => {
-        //receiveColor(handleReceiveColor);
-        if(userid == 1){
+        CreateEngine();
+        const color = Math.floor(Math.random() * (2 - 1 + 1)) + 1;
+        if (color == 1){
             setIsWhite(true)
-            setOrientation('white')
         }
-
-        receiveMove(handleReceiveMove);
-        
     });
 
     useEffect(() => {
         setHistory(chess.history({ verbose: true }));
     }, [position]);
 
-    const handleReceiveColor = (color) => {
-        //maybe add a delay if msg popps up for like a second
-        if (color == 1){
-            setIsWhite(true)
-        }
-        else {
-            setIsWhite(false)
-        }
-        setColorReceived(true)
+    const uciCmd = cmd => {
+        engine.postMessage(cmd);
     }
 
-    const handleReceiveMove = (source, target) => {
-        console.log("handle move " + target);
-        chess.move({ from: source, to: target, promotion: "q" }); // check for checkmate
-        setPosition(chess.fen());
-    }  
+    const CreateEngine = () => {
+        
+        uciCmd('uci');
+        uciCmd('ucinewgame');
+    }
 
-    const handleTest = (msg) => {
-        setMessage(msg);
-        setPosition(chess.fen());
+    const EngineMove = () => {
+        //var fen = chess.fen() 
+        var moves = '';
+        for(var i = 0; i < history.length; ++i) {
+            var move = history[i];
+            moves += ' ' + move.from + move.to + (move.promotion ? move.promotion : '');
+        }
+        uciCmd('position startpos moves' + moves);
+        uciCmd('go depth 10');
+    }
+
+    engine.onmessage = function(event) {
+        console.log("on message called");
     }
 
     const onDrop = ({ sourceSquare, targetSquare }) => {
-        console.log("turn ", chess.turn(), " color is white? ", isWhite);
         if ((chess.turn() == 'w' && isWhite) || (chess.turn() == 'b' && !isWhite)){
-            let move = chess.move({
+            chess.move({
                 from: sourceSquare,
                 to: targetSquare,
                 promotion: "q"
             });
-    
-            //if (move == null) return;
+            
             setPosition(chess.fen());
-            sendMove(gameid, sourceSquare, targetSquare);
+            EngineMove();
         }
     } 
 
-    
-
     return (
         <div className="game-board">
-            <Chat gameCode={ gameid }/>
             <div className="board">
                 <Chessboard
                     width={600}

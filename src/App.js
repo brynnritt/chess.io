@@ -3,7 +3,8 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import NotFound from './NotFound';
 import WelcomeScreen from './WelcomeScreen';
 import Game from './Game';
-import Test from './Test';
+import ComputerGame from './ComputerGame';
+import Chat from './Chat';
 
 function App() {
   return (
@@ -18,8 +19,11 @@ function App() {
             <Route path="/game/:gameid/:userid">
               <Game />
             </Route>
-            <Route exact path="/test">
-              <Test />
+            <Route path="/playcomp">
+              <ComputerGame />
+            </Route>
+            <Route path="/chat">
+              <Chat />
             </Route>
             <Route path="*">
               <NotFound />

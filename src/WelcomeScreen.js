@@ -13,6 +13,7 @@ const WelcomeScreen = () => {
     // room creator will have userId of 1
     const [userId, setUserId] = useState(0);
     const [roomJoined, setRoomJoined] = useState(false);
+    const [optionSelected, setOptionSelected] = useState(false);
 
 
     const handleRoomCreated = (response) => {
@@ -33,6 +34,7 @@ const WelcomeScreen = () => {
         setJoinGame(false);
         setDirections('Copy code and send to a friend');
         setUserId(1);
+        setOptionSelected(true);
     }
 
     const handleJoinClick = () => {
@@ -40,15 +42,15 @@ const WelcomeScreen = () => {
         setJoinGame(true);
         setDirections('Enter code from a friend');
         setUserId(2);
+        setOptionSelected(true);
     }
 
     const handleCopyClick = () => {
         navigator.clipboard.writeText(gameCode);
-        setDirections('Waiting for friend to join the game...');
+        setDirections('Copied!');
     }
 
     const handleGoClick = () => {
-        
         return;
     }
 
@@ -81,24 +83,26 @@ const WelcomeScreen = () => {
                         onChange = { (e) => setGameCode(e.target.value) }
                     />
                     { !joinGame && <button 
-                        className="copy-button">
+                        className="copy-button"
+                        type="button"
+                        onClick={ handleCopyClick }>
                         Copy
                     </button> }
-                    { joinGame && 
-                        <Link to={ '/game/' + gameCode } className='go-link'>
-                            <button className="go-button"
-                                onClick={ handleGoClick }>
-                                Go
-                            </button>
-                        </Link>
-                    }
+                    { joinGame && <button 
+                        className="hidden-button"
+                        type="button">
+                    </button> }
                 </form>
                 
-                <div className="directions">
-                    <label>{ directions }</label>
-                </div>
+                
                 { /*(roomCreated || roomJoined) && <Link to={'/game/' + gameCode}> <button className="play-button">Play</button> </Link> */}
-                <Link to={'/game/' + gameCode + '/' + userId}> <button className="play-button" onClick={ handlePlayClick }>Play</button> </Link>
+                <div className="play">
+                    { optionSelected && <Link to={'/game/' + gameCode + '/' + userId}> <button className="play-button" onClick={ handlePlayClick }>Play</button> </Link> }
+                    <div className="directions">
+                        <label>{ directions }</label>
+                    </div>
+                </div>
+                
                 
             </div>
         </div>

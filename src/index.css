@@ -131,6 +131,17 @@ nav {
   border: none;
 }
 
+.welcome-screen .hidden-button {
+  height: 20px;
+  width: auto;
+  margin: 25% auto;
+  font-size: small;
+  background-color: white;
+  outline: none;
+  border: none;
+  
+}
+
 .welcome-screen .go-button {
   height: 20px;
   width: auto;
@@ -150,21 +161,21 @@ nav {
 }
 
 .welcome-screen .play-button {
-  margin: 0;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  -ms-transform: translate(-50%, -50%);
-  transform: translate(-50%, 50px);
-  /*transform: translate(-35px);*/
+ margin-bottom: 5px;
+
 
 }
 
 .directions {
-  justify-content: center;
+  display: block;
+}
+
+.play {
   display: flex;
-  margin-top: 0px;
-  transform: translate(0%, 15px);
+  justify-content: center;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-items: center;
 }
 
 /* game screen */
@@ -200,6 +211,42 @@ nav {
   color: white !important;
   
 }
+
+
+body { 
+  margin: 0; 
+  padding-bottom: 3rem; 
+}
+
+.chat .form { 
+  background: rgba(0, 0, 0, 0.15); 
+  padding: 0.25rem; 
+  position: fixed; 
+  bottom: 0; left: 0; right: 0; 
+  display: flex; 
+  height: 3rem; 
+  box-sizing: border-box; 
+  backdrop-filter: blur(10px); 
+}
+.chat .message-input { 
+  border: none; 
+  padding: 0 1rem; 
+  flex-grow: 1; 
+  border-radius: 2rem; 
+  margin: 0.25rem; 
+}
+.chat .form > button { 
+  background: #333; 
+  border: none; 
+  padding: 0 1rem; 
+  margin: 0.25rem; 
+  border-radius: 3px; 
+  outline: none; 
+  color: #fff; }
+
+.chat .messages-list { list-style-type: none; margin: 0; padding: 0; }
+.chat .messages-list > li { padding: 0.5rem 1rem; }
+.chat .messages-list > li:nth-child(odd) { background: #efefef; }
 
 
 

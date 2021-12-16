@@ -50,9 +50,17 @@ io.on("connection", socket => {
       socket.broadcast.to(roomId).emit('receiveMove', {sourceSquare: data.sourceSquare, targetSquare: data.targetSquare});
   });
 
+  socket.on("sendMessage", function(data){
+        console.log("sending message ", data.message, " to ", data.roomId);
+        roomId = String(data.roomId);
+        socket.broadcast.to(roomId).emit('receiveMessage', {message: data.message});
+  });
+
   socket.on("disconnect", () => {
     console.log("Client disconnected");
   });
+
+  
 });
 
 
