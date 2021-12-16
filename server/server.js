@@ -33,7 +33,7 @@ io.on("connection", socket => {
       roomCount = rooms[data.roomId];
       var joinedRoom = false;
       //console.log(roomCount);
-      if (roomCount <= 1) {
+      if (roomCount == 1) {
             rooms[data.roomId]++;
             console.log('joining room ' + data.roomId);
             socket.join(roomId);
@@ -53,7 +53,8 @@ io.on("connection", socket => {
   socket.on("sendMessage", function(data){
         console.log("sending message ", data.message, " to ", data.roomId);
         roomId = String(data.roomId);
-        socket.broadcast.to(roomId).emit('receiveMessage', {message: data.message});
+        //socket.broadcast.to(roomId).emit('receiveMessage', {message: data.message});
+        io.sockets.in(roomId).emit('receiveMessage', {message: data.message});
   });
 
   socket.on("disconnect", () => {

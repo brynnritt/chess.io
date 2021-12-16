@@ -26,7 +26,8 @@ const Game = () => {
 
     useEffect(() => {
         CreateEngine();
-        const color = Math.floor(Math.random() * (2 - 1 + 1)) + 1;
+        //const color = Math.floor(Math.random() * (2 - 1 + 1)) + 1;
+        const color = 1;
         if (color == 1){
             setIsWhite(true)
         }

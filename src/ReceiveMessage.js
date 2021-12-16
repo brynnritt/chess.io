@@ -3,10 +3,10 @@ const client = require('./Socket').socket
 
 const ReceiveMessage = (callback) => {
 
-    client.on('receiveMessage', function(data){
-        console.log("received ", data.message);
-        callback(data);
-    });
+    //client.on('receiveMessage', function(data){
+     //   console.log("received ", data.message);
+    //    callback(data);
+    //});
 }
 
  

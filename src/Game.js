@@ -79,7 +79,10 @@ const Game = () => {
 
     return (
         <div className="game-board">
-            <Chat gameCode={ gameid }/>
+            <div className="chat">
+                <h3 className="chat-header">CHAT</h3>
+                <Chat gameCode={ gameid }/>
+            </div>
             <div className="board">
                 <Chessboard
                     width={600}

@@ -58,7 +58,7 @@ nav {
 
 .welcome-screen .code-box {
   width: 50%;
-  height: 35%;
+  height: 40%;
   position: fixed;
   top: 50%;
   left: 50%;
@@ -105,6 +105,16 @@ nav {
   opacity: 1;
 }
 
+.welcome-screen .create-game-button:focus{
+  background-color: #7d7272;
+  opacity: 1;
+}
+
+.welcome-screen .join-game-button:focus{
+  background-color: #7d7272;
+}
+
+
 .welcome-screen form {
   display: flex;
   width: 250px;
@@ -118,7 +128,7 @@ nav {
   width: auto;
   flex-grow: 2;
   border: none;
-  margin: 25% auto auto auto;
+  margin: 25% 0px auto auto;
   height: 18px;
 }
 
@@ -130,6 +140,7 @@ nav {
   cursor: pointer;
   border: none;
 }
+
 
 .welcome-screen .hidden-button {
   height: 20px;
@@ -161,14 +172,24 @@ nav {
 }
 
 .welcome-screen .play-button {
- margin-bottom: 5px;
+  margin-bottom: 5px;
+  height: 30px;
+  cursor: pointer;
+  padding-left: 20px;
+  padding-right: 20px;
+  text-decoration: none;
 
+  color: white;
+  background-color: #333;
+  border-radius: 8px;
+  border: #c8b7b7;
+  font-weight: 700;
+  opacity: 1;
+  letter-spacing: .5px;
+  text-size-adjust: small;
 
 }
 
-.directions {
-  display: block;
-}
 
 .play {
   display: flex;
@@ -176,6 +197,13 @@ nav {
   flex-direction: column;
   flex-wrap: wrap;
   align-items: center;
+}
+
+.welcome-screen .directions{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -120px);
 }
 
 /* game screen */
@@ -209,31 +237,30 @@ nav {
   flex-direction: row;
   margin: auto;
   color: white !important;
-  
+}
+
+.game-board .chat-header{
+  margin-top: 50px;
+  margin-left: 20px;
 }
 
 
-body { 
-  margin: 0; 
-  padding-bottom: 3rem; 
-}
 
 .chat .form { 
   background: rgba(0, 0, 0, 0.15); 
   padding: 0.25rem; 
-  position: fixed; 
-  bottom: 0; left: 0; right: 0; 
-  display: flex; 
-  height: 3rem; 
+  position: fixed; bottom: 0; left: 0; right: 0; 
+  display: flex; height: 3rem; 
   box-sizing: border-box; 
-  backdrop-filter: blur(10px); 
+  backdrop-filter: blur(10px);
+
 }
 .chat .message-input { 
   border: none; 
   padding: 0 1rem; 
   flex-grow: 1; 
   border-radius: 2rem; 
-  margin: 0.25rem; 
+  margin: 0.25rem;
 }
 .chat .form > button { 
   background: #333; 
@@ -242,10 +269,12 @@ body {
   margin: 0.25rem; 
   border-radius: 3px; 
   outline: none; 
-  color: #fff; }
+  color: #fff;
+}
 
-.chat .messages-list { list-style-type: none; margin: 0; padding: 0; }
-.chat .messages-list > li { padding: 0.5rem 1rem; }
+.chat .messages-list { 
+  list-style-type: none; margin-right: 0px; padding: 0;  }
+.chat .messages-list > li { padding: 0.5rem 1rem; max-width: 300px; }
 .chat .messages-list > li:nth-child(odd) { background: #efefef; }
 
 

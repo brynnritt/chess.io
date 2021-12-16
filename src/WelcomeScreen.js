@@ -9,22 +9,21 @@ const WelcomeScreen = () => {
     const [joinGame, setJoinGame] = useState(false);
     const [directions, setDirections] = useState('');
     // when true, rendered join game button
-    const [roomCreated, setRoomCreated] = useState(false);
+    const [playEnabled, setPlayEnabled] = useState(false);
     // room creator will have userId of 1
     const [userId, setUserId] = useState(0);
-    const [roomJoined, setRoomJoined] = useState(false);
     const [optionSelected, setOptionSelected] = useState(false);
 
 
     const handleRoomCreated = (response) => {
         if (response) {
-            setRoomCreated(true);
+            setPlayEnabled(true);
         }
     }
     
     const handleRoomJoined = (response) => {
         if (response) {
-            setRoomJoined(true);
+            setPlayEnabled(true);
         }
     }
 
@@ -73,8 +72,13 @@ const WelcomeScreen = () => {
                         onClick={ handleJoinClick }>
                         Join Game
                     </button>
+                    
                 </div>
-                <form>
+                
+                { optionSelected && <form>
+
+                
+                
                     <input
                         className="game-code-box"
                         type="text"
@@ -92,19 +96,15 @@ const WelcomeScreen = () => {
                         className="hidden-button"
                         type="button">
                     </button> }
-                </form>
+                </form> }
                 
                 
                 { /*(roomCreated || roomJoined) && <Link to={'/game/' + gameCode}> <button className="play-button">Play</button> </Link> */}
                 <div className="play">
-                    { optionSelected && <Link to={'/game/' + gameCode + '/' + userId}> <button className="play-button" onClick={ handlePlayClick }>Play</button> </Link> }
-                    <div className="directions">
-                        <label>{ directions }</label>
-                    </div>
+                    { optionSelected && <Link to={'/game/' + gameCode + '/' + userId}> <button className="play-button" disabled={ playEnabled } onClick={ handlePlayClick }>PLAY</button> </Link> }
                 </div>
-                
-                
             </div>
+            <label className="directions">{ directions }</label>
         </div>
     );
 }
